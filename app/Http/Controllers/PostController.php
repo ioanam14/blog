@@ -23,9 +23,11 @@ class PostController extends Controller
         $post->fill($data);
         $post->save();
 
-        print '<pre>';
-        print_r($request->all());
-        print '</pre>';
-        die();
+        if ($post->id == null)
+        {
+            return redirect()->route('post.create')->with('alert-danger', 'There was an error!');
+        }
+
+        return redirect()->route('post.create')->with('alert-success', 'Post was successful added!');
     }
 }
