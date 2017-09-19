@@ -8,6 +8,13 @@ use Illuminate\Http\Request;
 
 class PostController extends Controller
 {
+    public function getPosts()
+    {
+        $posts = PostModel::orderBy('created_at', 'desc')->paginate(5);
+
+        return view('post.list', compact('posts'));
+    }
+
     public function getCreatePost()
     {
         return view('post.create');

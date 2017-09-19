@@ -11,9 +11,6 @@
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
-});
 
 Auth::routes();
 
@@ -23,4 +20,4 @@ Route::get('/post/create', 'PostController@getCreatePost')->name('post.create')-
 
 Route::post('/post/create', 'PostController@postCreatePost')->name('post.create')->middleware('auth');
 
-
+Route::get("/", 'PostController@getPosts')->name('post.list');
