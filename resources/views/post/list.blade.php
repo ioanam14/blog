@@ -5,6 +5,12 @@
     <div class="row">
         <div class="col-md-8 col-md-offset-2">
 
+            @if(count($posts) == 0)
+                <div class="alert alert-info">
+                    <strong>Info!</strong> There are no posts!
+                </div>
+            @endif
+
             @foreach($posts as $post)
                 <div class="panel panel-default">
                     <div class="panel-heading">

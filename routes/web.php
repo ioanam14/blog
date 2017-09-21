@@ -20,4 +20,6 @@ Route::get('/post/create', 'PostController@getCreatePost')->name('post.create')-
 
 Route::post('/post/create', 'PostController@postCreatePost')->name('post.create')->middleware('auth');
 
-Route::get("/", 'PostController@getPosts')->name('post.list');
+Route::get('/', 'PostController@getPosts')->name('post.list');
+
+Route::get('/my-posts', 'UserController@getPosts')->name('user.posts');
