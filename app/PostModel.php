@@ -8,5 +8,5 @@ class PostModel extends Model
 {
     protected $table = 'posts';
 
-    protected $fillable = ['user_id', 'title', 'content', 'thumbnail'];
+    protected $fillable = ['user_id', 'title', 'content', 'thumbnail', 'slug'];
 }

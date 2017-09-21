@@ -14,7 +14,7 @@
             @foreach($posts as $post)
                 <div class="panel panel-default">
                     <div class="panel-heading">
-                        {{ $post->title }}
+                        <a href="{{ route('post.view', ['slug' => $post->slug]) }}" >{{ $post->title }}</a>
                         <span class="pull-right">{{ $post->created_at }}</span>
                     </div>
 

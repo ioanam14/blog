@@ -26,6 +26,7 @@ class PostController extends Controller
 
         $data = $request->all();
         $data['user_id'] = Auth::id();
+        $data['slug'] = str_slug($data['title'], '-') . '-' . rand(0, 1000000000);
 
         $post->fill($data);
         $post->save();
@@ -36,5 +37,12 @@ class PostController extends Controller
         }
 
         return redirect()->route('post.create')->with('alert-success', 'Post was successful added!');
+    }
+
+    public function getPost($slug)
+    {
+        $post = PostModel::where('slug', $slug)->firstOrFail();
+
+        return view('post.view', compact('post'));
     }
 }
