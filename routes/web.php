@@ -20,7 +20,9 @@ Route::get('/home', 'HomeController@index')->name('home');
 Route::get('/post/{slug}', 'PostController@getPost')->name("post.view");
 
 Route::get('/post/create', 'PostController@getCreatePost')->name('post.create')->middleware('auth');
-Route::post('/post/create', 'PostController@postCreatePost')->name('post.create')->middleware('auth');
+Route::post('/post/create', 'PostController@createPost')->name('post.create')->middleware('auth');
 
 Route::get('/my-posts', 'UserController@getPosts')->name('user.posts');
 
+Route::get('/post/edit/{slug}', 'PostController@getEditPost')->name('post.edit');
+Route::put('/post/edit/{slug}', 'PostController@editPost')->name('post.edit');

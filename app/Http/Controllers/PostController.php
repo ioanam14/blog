@@ -20,7 +20,7 @@ class PostController extends Controller
         return view('post.create');
     }
 
-    public function postCreatePost(Request $request)
+    public function createPost(Request $request)
     {
         $post = new PostModel();
 
@@ -44,5 +44,22 @@ class PostController extends Controller
         $post = PostModel::where('slug', $slug)->firstOrFail();
 
         return view('post.view', compact('post'));
+    }
+
+    public function getEditPost($slug)
+    {
+        $post = PostModel::where([['slug', $slug], ['user_id', Auth::id()]])->firstOrFail();
+
+        return view('post.edit', compact('post'));
+    }
+
+    public function editPost(Request $request, $slug)
+    {
+        $post = PostModel::where([['slug', $slug], ['user_id', Auth::id()]])->firstOrFail();
+
+        $post->fill($request->all());
+        $post->save();
+
+        return redirect()->route('post.edit', ['slug' => $slug])->with('alert-success', 'Post was successful edited!');
     }
 }

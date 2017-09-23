@@ -18,6 +18,6 @@ class UserController extends Controller
             $posts = $user->posts()->orderBy('created_at', 'desc')->paginate(10);
         }
 
-        return view('post.list', compact('posts'));
+        return view('post.my-list', compact('posts'));
     }
 }
