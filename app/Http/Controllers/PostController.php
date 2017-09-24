@@ -62,4 +62,15 @@ class PostController extends Controller
 
         return redirect()->route('post.edit', ['slug' => $slug])->with('alert-success', 'Post was successful edited!');
     }
+
+    public function deletePost(Request $request)
+    {
+        $slug = $request->input('slug');
+
+        $post = PostModel::where([['slug', $slug], ['user_id', Auth::id()]])->firstOrFail();
+
+        $post->delete();
+
+        return redirect()->route('user.posts')->with('alert-success', 'Post was successful deleted!');
+    }
 }

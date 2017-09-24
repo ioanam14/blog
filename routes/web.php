@@ -26,3 +26,5 @@ Route::get('/my-posts', 'UserController@getPosts')->name('user.posts');
 
 Route::get('/post/edit/{slug}', 'PostController@getEditPost')->name('post.edit');
 Route::put('/post/edit/{slug}', 'PostController@editPost')->name('post.edit');
+
+Route::delete('/post/delete', 'PostController@deletePost')->name('post.delete');
