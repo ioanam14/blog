@@ -14,7 +14,7 @@
                 <div class="panel-body">
                     <img src="{{ $post->thumbnail }}">
                     <br>
-                    {{ $post->content }}
+                    {!! $post->content !!}
                 </div>
             </div>
 

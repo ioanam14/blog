@@ -24,7 +24,7 @@
                             <br>
                         @endif
 
-                        {{ $post->content }}
+                        {!! $post->content !!}
                     </div>
 
                     <div class="panel-footer">
