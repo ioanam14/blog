@@ -15,7 +15,7 @@
                 <div class="panel panel-default">
                     <div class="panel-heading">
                         <a href="{{ route('post.view', ['slug' => $post->slug]) }}" >{{ $post->title }}</a>
-                        <span class="pull-right">{{ $post->created_at }}</span>
+                        <span class="pull-right">{{ $post->created_at->format('d M Y H:i') }}</span>
                     </div>
 
                     <div class="panel-body">
