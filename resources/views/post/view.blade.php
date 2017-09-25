@@ -1,5 +1,9 @@
 @extends('layouts.app')
 
+@section('after-styles')
+    {{ Html::style('css/custom_emojionearea.css') }}
+@endsection
+
 @section('content')
 <div class="card">
     <div class="header">
@@ -19,51 +23,59 @@
 </div>
 
 <!-- Display add comment section if the user is logged in -->
-@auth
-    <div class="panel panel-default">
-        <div class="panel-heading">Add a comment</div>
+<div class="card">
+    <div class="header"><h3>Comments</h3></div>
 
-        <div class="panel-body">
+    @auth
+        <div class="content">
             {{ Form::open(['route' => ['comment.add', $post->slug]]) }}
-            {{ Form::textarea('content', null, ['class' => 'form-control', 'rows' => '3']) }}
-            {{ Form::submit('Add', ['class' => 'btn btn-primary pull-right', 'style' => "margin-top: 5px"]) }}
+            {{ Form::textarea('content', null, ['id' => 'textarea-comment', 'class' => 'form-control', 'rows' => '5']) }}
+            {{ Form::submit('Add', ['class' => 'btn-add btn btn-primary mt-2']) }}
             {{ Form::close() }}
         </div>
-    </div>
-@endauth
+    @endauth
 
-<!-- Comments -->
-@foreach ($comments as $comment)
-    <div class="panel">
-        <div class="panel-body">
-            <div class="media">
-                <div class="media-left">
-                    <img src="https://d4n5pyzr6ibrc.cloudfront.net/media/27FB7F0C-9885-42A6-9E0C19C35242B5AC/4785B1C2-8734-405D-96DC23A6A32F256B/thul-90efb785-97af-5e51-94cf-503fc81b6940.jpg?response-content-disposition=inline" class="media-object" style="width:60px">
-                </div>
+    @guest
+        <div class="content text-center">
+            Please <a href="{{ route('register') }}" class="font-weight-bold">register</a> to add comments
+        </div>
+    @endguest
+
+    <div class="footer">
+
+        @foreach ($comments as $comment)
+            <div class="media mb-4">
+                <img class="d-flex align-self-start mr-3 rounded-circle" src="https://d4n5pyzr6ibrc.cloudfront.net/media/27FB7F0C-9885-42A6-9E0C19C35242B5AC/4785B1C2-8734-405D-96DC23A6A32F256B/thul-90efb785-97af-5e51-94cf-503fc81b6940.jpg?response-content-disposition=inline" alt="Generic placeholder image" width="60">
+                
                 <div class="media-body">
-
-                    @if ($comment->is_mine)
-                        <div class="pull-right">
-                            <a class="btn-edit" data-toggle="modal" data-target="#comment-edit" data-comment-id="{{ $comment->id }}">                                    
-                                <span class="glyphicon glyphicon-pencil"></span>
-                            </a>
-                            <a class="btn-delete" data-toggle="modal" data-target="#comment-delete" data-comment-id="{{ $comment->id }}">
-                                <span class="glyphicon glyphicon-remove"></span>
-                            </a>
+                    <div class="d-flex justify-content-start">
+                        <div class="p-2">
+                            <h6>{{ $comment->user->name }}</h6>
+                            <small>{{ $comment->updated_at->format('d M Y H:i') }}</small>
                         </div>
-                    @endif
+                        <div class="ml-auto p-2">
 
-                    <h4 class="media-heading">
-                        {{ $comment->user->name }}
-                        <small>{{ $comment->updated_at->format('d M Y H:i') }}</small>
-                    </h4>
-
-                    <p id="content-{{ $comment->id }}">{{ $comment->content }}</p>
+                            @if ($comment->is_mine)
+                                <span class="dropdown">
+                                    <span class="caret pointer dropdown-toggle" role="button" data-toggle="dropdown" aria-expanded="false"></span>
+                    
+                                    <div class="dropdown-menu dropdown-menu-right" aria-labelledby="dropdownMenuButton">
+                                        <a class="btn-dropdown-edit dropdown-item" href="#" data-toggle="modal" data-target="#comment-edit" data-comment-id="{{ $comment->id }}">Edit</a>
+                                        <a class="btn-dropdown-delete dropdown-item" href="#" data-toggle="modal" data-target="#comment-delete" data-comment-id="{{ $comment->id }}">Delete</a>
+                                    </div>
+                                </span>
+                            @endif
+                        
+                        </div>
+                    </div>
+                    
+                    <p id="content-{{ $comment->id }}">{!! $comment->content !!}</p>
                 </div>
             </div>
-        </div>
+        @endforeach
+    
     </div>
-@endforeach
+</div>
 
 <!-- Modals -->
 <div id="comment-edit" class="modal fade" role="dialog">
@@ -77,12 +89,12 @@
             {{ Form::open(['route' => 'comment.edit', 'method' => 'PUT']) }}
 
                 <div class="modal-body">
-                    {{ Form::hidden('comment-id', null, ['id' => 'input-comment-id']) }}
-                    {{ Form::textarea('content', null, ['id' => 'input-comment-content', 'class' => 'form-control'])}}
+                    {{ Form::hidden('comment-id', null, ['class' => 'input-comment-id']) }}
+                    {{ Form::textarea('content', null, ['id' => 'textarea-comment-edit', 'class' => 'form-control'])}}
                 </div>
 
                 <div class="modal-footer">
-                    {{ Form::submit('Edit', ['class' => 'btn btn-primary']) }}
+                    {{ Form::submit('Save', ['class' => 'btn-save btn btn-success']) }}
                     <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
                 </div>
             
@@ -106,7 +118,7 @@
             {{ Form::open(['route' => 'comment.delete', 'method' => 'DELETE']) }}
 
                 <div class="modal-footer">
-                    {{ Form::hidden('comment-id', null, ['id' => 'input-comment-id']) }}
+                    {{ Form::hidden('comment-id', null, ['class' => 'input-comment-id']) }}
                     {{ Form::submit('Delete', ['class' => 'btn btn-danger']) }}
                     <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
                 </div>
@@ -118,21 +130,35 @@
 @endsection
 
 @section('after-scripts')
+    <script src="{{ asset('js/custom_emojionearea.js') }}"></script>
     <script>
-        $(".btn-edit").click(function () {
-            var comment_id = $(this).data('comment-id');
-            var content = $("#content-" + comment_id).text();
-
-            console.log(content);
-
-            $("#input-comment-id").val(comment_id);
-            $("#input-comment-content").val(content);
+        $(document).ready(function() {
+            $("#textarea-comment").emojioneArea(emojionearea_options);
+            $("#textarea-comment-edit").emojioneArea(emojionearea_options);
         });
 
-        $(".btn-delete").click(function () {
-            var comment_id = $(this).data('comment-id');
+        $(".btn-add").click(function () {
+            var emoji_text = $(".emojionearea-editor").html();
+            $("#textarea-comment").val(emoji_text);
+        });
 
-            $("#input-comment-id").val(comment_id);
+        $(".btn-dropdown-edit").click(function () {
+            var comment_id = $(this).data('comment-id');
+            var comment_content = $("#content-" + comment_id).html();
+            var textarea = $("#textarea-comment-edit").next().children(".emojionearea-editor");
+            
+            textarea.html(comment_content);
+            $(".input-comment-id").val(comment_id);
+        });
+
+        $(".btn-dropdown-delete").click(function () {
+            var comment_id = $(this).data('comment-id');
+            $(".input-comment-id").val(comment_id);
+        });
+
+        $(".btn-save").click(function () {
+            var emoji_text = $("#textarea-comment-edit").next().children(".emojionearea-editor").html();
+            $("#textarea-comment-edit").val(emoji_text);
         });
     </script>
 @endsection

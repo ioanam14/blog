@@ -16,7 +16,7 @@ class CommentController extends Controller
         $data = [
             'post_id' => $post->id,
             'user_id' => Auth::id(),
-            'content' => $request->input('content'),
+            'content' => strip_tags($request->input('content'), '<img><br>'),
         ];
         
         $comment = new CommentModel();
@@ -29,7 +29,7 @@ class CommentController extends Controller
     public function editComment(Request $request)
     {
         $comment = CommentModel::where([['user_id', Auth::id()], ['id', $request->input('comment-id')]])->firstOrFail();
-        $comment->content = $request->input('content');
+        $comment->content = strip_tags($request->input('content'), '<img><br>');
         $comment->save();
 
         return redirect()->back()->with('alert-success', 'Comment was successfully edited!');

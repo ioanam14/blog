@@ -11,7 +11,9 @@
     <title>{{ config('app.name', 'Laravel') }}</title>
 
     <!-- Styles -->
+    {{ Html::style('css/app.css') }}   
     {{ Html::style('https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.0.0-alpha.6/css/bootstrap.min.css') }}
+    {{ Html::style('https://cdnjs.cloudflare.com/ajax/libs/octicons/4.4.0/font/octicons.css ') }}
     {{ Html::style('css/custom.css') }}
     @yield('after-styles')
 </head>
@@ -34,6 +36,7 @@
                     <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
                         <a class="dropdown-item" href="{{ route('post.create') }}">Create post</a>
                         <a class="dropdown-item" href="{{ route('user.posts') }}">My posts</a>
+                        <div class="dropdown-divider"></div>
                         <a class="dropdown-item" href="{{ route('logout') }}" onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
                             Logout
                         </a>
@@ -61,10 +64,10 @@
     </div>
 
     <!-- Scripts -->
-    <script src="{{ asset('js/app.js') }}"></script>
     <script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/tether/1.4.0/js/tether.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/js/bootstrap.min.js"></script>
+    <script src="{{ asset('js/app.js') }}"></script>
     @yield('after-scripts')
 </body>
 </html>
