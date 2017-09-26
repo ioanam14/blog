@@ -12,6 +12,16 @@ class PostController extends Controller
     {
         $posts = PostModel::orderBy('created_at', 'desc')->paginate(5);
 
+        foreach ($posts as $post)
+        {
+            $post->content = strip_tags($post->content, '<p>');
+ 
+            if (strlen($post->content) > 200) 
+            {
+                $post->content = substr($post->content, 0, 200) . '...';
+            }
+        }
+
         return view('post.list', compact('posts'));
     }
 
@@ -82,5 +92,5 @@ class PostController extends Controller
         $post->delete();
 
         return redirect()->route('user.posts')->with('alert-success', 'Post was successfully deleted!');
-    }
+    } 
 }
