@@ -5,7 +5,7 @@
 @endsection
 
 @section('content')
-    <div class="card">
+    <div class="article">
         <div class="header">
             <h3>Add Post</h3>
         </div>
@@ -37,17 +37,11 @@
 
 @section('after-scripts')
     <script src="http://cdnjs.cloudflare.com/ajax/libs/summernote/0.8.8/summernote-bs4.js"></script>
+    <script src="{{ asset('js/custom_summernote.js') }}"></script>
+
     <script>
         $(document).ready(function() {
-            $('#content').summernote({
-                height: 200,
-                tabsize: 4,
-                popover: {
-                    image: [],
-                    link: [],
-                    air: []
-                }
-            });
+            $('#content').summernote(summernote_options);
         });
     </script>
 @endsection

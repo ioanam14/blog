@@ -5,7 +5,7 @@
 @endsection
 
 @section('content')
-<div class="card">
+<div class="article">
     <div class="header">
         <a href="{{ route('post.view', ['slug' => $post->slug]) }}">
             <h3>{{ $post->title }}</h3>
@@ -23,14 +23,16 @@
 </div>
 
 <!-- Display add comment section if the user is logged in -->
-<div class="card">
-    <div class="header"><h3>Comments</h3></div>
+<div class="article">
+    <div class="header">
+        <h3>Comments</h3>
+    </div>
 
     @auth
         <div class="content">
             {{ Form::open(['route' => ['comment.add', $post->slug]]) }}
             {{ Form::textarea('content', null, ['id' => 'textarea-comment', 'class' => 'form-control', 'rows' => '5']) }}
-            {{ Form::submit('Add', ['class' => 'btn-add btn btn-primary mt-2']) }}
+            {{ Form::submit('Add', ['class' => 'button mt-2']) }}
             {{ Form::close() }}
         </div>
     @endauth

@@ -1,7 +1,7 @@
 @extends('layouts.app')
 
 @section('content')
-<div class="card">
+<div class="article">
     <div class="header">Dashboard</div>
 
     <div class="content">

@@ -11,10 +11,11 @@
     <title>{{ config('app.name', 'Laravel') }}</title>
 
     <!-- Styles -->
-    {{ Html::style('css/app.css') }}   
-    {{ Html::style('https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.0.0-alpha.6/css/bootstrap.min.css') }}
     {{ Html::style('https://cdnjs.cloudflare.com/ajax/libs/octicons/4.4.0/font/octicons.css ') }}
+    {{ Html::style('https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.0.0-alpha.6/css/bootstrap.min.css') }}
+    {{ Html::style('css/app.css') }}   
     {{ Html::style('css/custom.css') }}
+    {{ Html::style('css/custom_bootstrap.css') }}
     @yield('after-styles')
 </head>
 

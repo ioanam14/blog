@@ -1,0 +1,71 @@
+.article {
+	background-color: $article-bg-color;
+	border-top: 2px solid $primary-color;
+	border-bottom: 2px solid $primary-color;
+	border-radius: 4px;
+	box-shadow: 0px 20px 100px rgba(50,50,93,.15), 0 15px 35px rgba(50,50,93,.2), 0 5px 15px rgba(0,0,0,.12);
+	padding: 35px;
+	margin-bottom: 50px;
+
+	/* Break long words */
+	overflow-wrap: break-word;
+	word-wrap: break-word;
+	word-break: break-all;
+	word-break: break-word;
+    hyphens: auto;
+    
+    .thumbnail {
+        height: 250px;
+        margin: 0 -35px 35px -35px;
+        
+        /* Cover div */
+        background-position: center;
+        background-size: cover;
+        -webkit-background-size: cover;
+        -moz-background-size: cover;
+        -o-background-size: cover;
+    }
+
+    .header {
+        margin-bottom: 35px;
+    
+        a {
+            color: $text-color;
+        }
+
+        a:hover {
+            color: $primary-color;
+        }
+
+        h3 {
+            font-size: 1.8em;
+            font-weight: bold;
+            margin-bottom: -4px;
+        }
+    }
+
+    .content {
+        position:relative;
+
+        
+    }
+
+    .footer {
+        margin-top: 25px;
+    }
+
+    .media {
+        h6 {
+            margin-bottom: -2px;
+        }
+
+        small {
+            font-size: 0.8em;
+        }
+
+        p {
+            margin-left: 10px;
+            margin-top: 10px;
+        }
+    }
+}

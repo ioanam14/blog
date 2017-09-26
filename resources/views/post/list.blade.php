@@ -8,7 +8,7 @@
     @endif
 
     @foreach($posts as $post)
-        <div class="card">
+        <div class="article">
             <div class="header">
                 <a href="{{ route('post.view', ['slug' => $post->slug]) }}">
                     <h3>{{ $post->title }}</h3>

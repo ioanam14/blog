@@ -1,0 +1,18 @@
+.nav {
+    margin-bottom: 70px;
+
+    a {
+        color: $text-color;
+    }
+
+    a:hover {
+        transition: all .5s ease;
+        color: $primary-color;
+    }
+    
+    .link {
+        font-size: 1.2em;
+        padding-top: 35px;
+        margin-right: 35px;
+    }
+}
