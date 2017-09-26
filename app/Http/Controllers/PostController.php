@@ -36,14 +36,16 @@ class PostController extends Controller
             return redirect()->route('post.create')->with('alert-danger', 'There was an error!');
         }
 
-        return redirect()->route('post.create')->with('alert-success', 'Post was successful added!');
+        return redirect()->route('post.create')->with('alert-success', 'Post was successfully added!');
     }
 
     public function getPost($slug)
     {
         $post = PostModel::where('slug', $slug)->firstOrFail();
 
-        return view('post.view', compact('post'));
+        $comments = $post->comments;
+
+        return view('post.view', compact('post', 'comments'));
     }
 
     public function getEditPost($slug)
@@ -60,7 +62,7 @@ class PostController extends Controller
         $post->fill($request->all());
         $post->save();
 
-        return redirect()->route('post.edit', ['slug' => $slug])->with('alert-success', 'Post was successful edited!');
+        return redirect()->route('post.edit', ['slug' => $slug])->with('alert-success', 'Post was successfully edited!');
     }
 
     public function deletePost(Request $request)
@@ -71,6 +73,6 @@ class PostController extends Controller
 
         $post->delete();
 
-        return redirect()->route('user.posts')->with('alert-success', 'Post was successful deleted!');
+        return redirect()->route('user.posts')->with('alert-success', 'Post was successfully deleted!');
     }
 }

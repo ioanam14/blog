@@ -28,3 +28,5 @@ Route::get('/post/edit/{slug}', 'PostController@getEditPost')->name('post.edit')
 Route::put('/post/edit/{slug}', 'PostController@editPost')->name('post.edit');
 
 Route::delete('/post/delete', 'PostController@deletePost')->name('post.delete');
+
+Route::post('/comment/{slug}', 'CommentController@createComment')->name('comment.create');
