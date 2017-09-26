@@ -28,7 +28,7 @@
                 {{ Form::text('thumbnail', null, ['class' => 'form-control']) }}
             </div>
 
-            {{ Form::submit('Add', ['class' => 'btn btn-primary']) }}
+            {{ Form::submit('Add', ['class' => 'button']) }}
 
             {{ Form::close() }}
         </div>

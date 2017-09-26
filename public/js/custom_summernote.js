@@ -10,4 +10,9 @@ var summernote_options = {
         ['picture', ['picture']],
         ['link', ['link']]
     ],
+    popover: {
+        image: [],
+        link: [],
+        air: []
+    },
 }
