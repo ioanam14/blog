@@ -16,7 +16,7 @@ Auth::routes();
 Route::get('/', 'PostController@getPosts')->name('post.list');
 Route::get('/home', 'HomeController@index')->name('home');
 Route::get('/my-posts', 'UserController@getPosts')->name('user.posts');
-Route::get('/post/{slug}', 'PostController@getPost')->name("post.view");
+Route::get('/post/view/{slug}', 'PostController@getPost')->name("post.view");
 
 // There routes require the user to be logged in
 Route::middleware(['auth'])->group(function() {
