@@ -1,5 +1,9 @@
 @extends('layouts.app')
 
+@section('after-styles')
+    <link href="http://cdnjs.cloudflare.com/ajax/libs/summernote/0.8.8/summernote.css" rel="stylesheet">
+@endsection
+
 @section('content')
 <div class="container">
     <div class="row">
@@ -17,7 +21,7 @@
 
                     <div class="form-group">
                         {{ Form::label('content', 'Content') }}
-                        {{ Form::textarea('content', $post->content, ['class' => 'form-control']) }}
+                        {{ Form::textarea('content', $post->content, ['id' => 'content', 'class' => 'form-control']) }}
                     </div>
 
                     <div class="form-group">
@@ -33,4 +37,15 @@
         </div>
     </div>
 </div>
+@endsection
+
+@section('after-scripts')
+    <script src="http://cdnjs.cloudflare.com/ajax/libs/summernote/0.8.8/summernote.js"></script>
+    <script>
+    $(document).ready(function() {
+        $('#content').summernote({
+            height: 200 
+        });
+    });
+    </script>
 @endsection

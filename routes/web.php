@@ -11,20 +11,28 @@
 |
 */
 
-
 Auth::routes();
 
 Route::get('/', 'PostController@getPosts')->name('post.list');
 Route::get('/home', 'HomeController@index')->name('home');
-
-Route::get('/post/{slug}', 'PostController@getPost')->name("post.view");
-
-Route::get('/post/create', 'PostController@getCreatePost')->name('post.create')->middleware('auth');
-Route::post('/post/create', 'PostController@createPost')->name('post.create')->middleware('auth');
-
 Route::get('/my-posts', 'UserController@getPosts')->name('user.posts');
+Route::get('/post/view/{slug}', 'PostController@getPost')->name("post.view");
 
-Route::get('/post/edit/{slug}', 'PostController@getEditPost')->name('post.edit');
-Route::put('/post/edit/{slug}', 'PostController@editPost')->name('post.edit');
+// There routes require the user to be logged in
+Route::middleware(['auth'])->group(function() {
+    Route::prefix('post')->group(function() {
+        Route::get('create', 'PostController@getCreatePost')->name('post.create');
+        Route::post('create', 'PostController@createPost')->name('post.create');
 
-Route::delete('/post/delete', 'PostController@deletePost')->name('post.delete');
+        Route::get('edit/{slug}', 'PostController@getEditPost')->name('post.edit');
+        Route::put('edit/{slug}', 'PostController@editPost')->name('post.edit');
+        
+        Route::delete('delete', 'PostController@deletePost')->name('post.delete');
+    });
+
+    Route::prefix('comment')->group(function (){
+        Route::post('{slug}', 'CommentController@addComment')->name('comment.add');
+        Route::put('/edit', 'CommentController@editComment')->name('comment.edit');
+        Route::delete('/delete', 'CommentController@deleteComment')->name('comment.delete');
+    });
+});

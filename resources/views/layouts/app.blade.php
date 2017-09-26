@@ -11,89 +11,63 @@
     <title>{{ config('app.name', 'Laravel') }}</title>
 
     <!-- Styles -->
-    <link href="{{ asset('css/app.css') }}" rel="stylesheet">
+    {{ Html::style('css/app.css') }}   
+    {{ Html::style('https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.0.0-alpha.6/css/bootstrap.min.css') }}
+    {{ Html::style('https://cdnjs.cloudflare.com/ajax/libs/octicons/4.4.0/font/octicons.css ') }}
+    {{ Html::style('css/custom.css') }}
+    @yield('after-styles')
 </head>
+
 <body>
-    <div id="app">
-        <nav class="navbar navbar-default navbar-static-top">
-            <div class="container">
-                <div class="navbar-header">
+    <div class="container">
+        <div class="nav">
+            <a class="link" href="{{ route('post.list') }}">Home</a>
 
-                    <!-- Collapsed Hamburger -->
-                    <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#app-navbar-collapse">
-                        <span class="sr-only">Toggle Navigation</span>
-                        <span class="icon-bar"></span>
-                        <span class="icon-bar"></span>
-                        <span class="icon-bar"></span>
-                    </button>
-
-                    <!-- Branding Image -->
-                    <a class="navbar-brand" href="{{ url('/') }}">
-                        {{ config('app.name', 'Laravel') }}
+            @guest
+                <a class="link" href="{{ route('login') }}">Login</a>
+                <a class="link" href="{{ route('register') }}">Register</a>
+            @else
+                <span class="link dropdown">
+                    <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+                        {{ Auth::user()->name }}
+                        <span class="caret"></span>
                     </a>
-                </div>
+                    
+                    <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                        <a class="dropdown-item" href="{{ route('post.create') }}">Create post</a>
+                        <a class="dropdown-item" href="{{ route('user.posts') }}">My posts</a>
+                        <div class="dropdown-divider"></div>
+                        <a class="dropdown-item" href="{{ route('logout') }}" onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
+                            Logout
+                        </a>
 
-                <div class="collapse navbar-collapse" id="app-navbar-collapse">
-                    <!-- Left Side Of Navbar -->
-                    <ul class="nav navbar-nav">
-                        &nbsp;
-                    </ul>
+                        <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
+                            {{ csrf_field() }}
+                        </form>
+                    </div>
+                </span>
+            @endguest
+        </div>
 
-                    <!-- Right Side Of Navbar -->
-                    <ul class="nav navbar-nav navbar-right">
-                        <!-- Authentication Links -->
-                        @guest
-                            <li><a href="{{ route('login') }}">Login</a></li>
-                            <li><a href="{{ route('register') }}">Register</a></li>
-                        @else
-                            <li><a href="{{ route('post.create') }}">Create post</a></li>
-                            <li class="dropdown">
-                                <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
-                                    {{ Auth::user()->name }}
-                                    <span class="caret"></span>
-                                </a>
-
-                                <ul class="dropdown-menu" role="menu">
-                                    <li><a href="{{ route('user.posts') }}">My Posts</a></li>
-
-                                    <li>
-                                        <a href="{{ route('logout') }}" onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
-                                            Logout
-                                        </a>
-
-                                        <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
-                                            {{ csrf_field() }}
-                                        </form>
-                                    </li>
-                                </ul>
-                            </li>
-                        @endguest
-                    </ul>
-                </div>
-            </div>
-        </nav>
-
-        <div class="container">
-            <div class="row">
-                <div class="flash-message">
-                    @foreach (['danger', 'warning', 'success', 'info'] as $msg)
-                        @if(Session::has('alert-' . $msg))
-                            <p class="alert alert-{{ $msg }}">
-                                {{ Session::get('alert-' . $msg) }}
-                                <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
-                            </p>
-                        @endif
-                    @endforeach
-                </div>
-            </div>
+        <div class="flash-message">
+            @foreach (['danger', 'warning', 'success', 'info'] as $msg)
+                @if(Session::has('alert-' . $msg))
+                    <p class="alert alert-{{ $msg }}">
+                        {{ Session::get('alert-' . $msg) }}
+                        <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+                    </p>
+                @endif
+            @endforeach
         </div>
 
         @yield('content')
     </div>
 
     <!-- Scripts -->
+    <script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/tether/1.4.0/js/tether.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/js/bootstrap.min.js"></script>
     <script src="{{ asset('js/app.js') }}"></script>
-
     @yield('after-scripts')
 </body>
 </html>

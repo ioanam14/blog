@@ -1,34 +1,30 @@
 @extends('layouts.app')
 
 @section('content')
-<div class="container">
-    <div class="row">
-        <div class="col-md-8 col-md-offset-2">
+    @if(count($posts) == 0)
+        <div class="alert alert-info">
+            <strong>Info!</strong> There are no posts!
+        </div>
+    @endif
 
-            @if(count($posts) == 0)
-                <div class="alert alert-info">
-                    <strong>Info!</strong> There are no posts!
-                </div>
+    @foreach($posts as $post)
+        <div class="card">
+            <div class="header">
+                <a href="{{ route('post.view', ['slug' => $post->slug]) }}">
+                    <h3>{{ $post->title }}</h3>
+                </a>
+                <small class="date">Posted on {{ $post->created_at->format('d M Y H:i') }}</small>
+            </div>
+
+            @if(isset($post->thumbnail))
+                <div class="thumbnail" style="background-image: url('{{ $post->thumbnail }}')"></div>
             @endif
 
-            @foreach($posts as $post)
-                <div class="panel panel-default">
-                    <div class="panel-heading">
-                        <a href="{{ route('post.view', ['slug' => $post->slug]) }}" >{{ $post->title }}</a>
-                        <span class="pull-right">{{ $post->created_at }}</span>
-                    </div>
-
-                    <div class="panel-body">
-                        <img src="{{ $post->thumbnail }}">
-                        <br>
-                        {{ $post->content }}
-                    </div>
-                </div>
-            @endforeach
-
-            <div class="text-center">{{ $posts->links() }}</div>
-
+            <div class="content">
+                <p>{!! $post->content !!}</p>
+            </div>
         </div>
-    </div>
-</div>
+    @endforeach
+
+    <div class="text-center">{{ $posts->links() }}</div>
 @endsection
