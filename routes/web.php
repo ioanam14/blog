@@ -29,4 +29,8 @@ Route::put('/post/edit/{slug}', 'PostController@editPost')->name('post.edit');
 
 Route::delete('/post/delete', 'PostController@deletePost')->name('post.delete');
 
+Route::put('/comment/edit', 'CommentController@editComment')->name('comment.edit');
+
+Route::delete('/comment/delete', 'CommentController@deleteComment')->name('comment.delete');
+
 Route::post('/comment/{slug}', 'CommentController@createComment')->name('comment.create');

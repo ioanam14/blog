@@ -26,4 +26,19 @@ class CommentController extends Controller
 
         return redirect()->route('post.view', ['slug' => $slug])->with('alert-success', 'Comment was successfully posted!');
     }
+
+    public function editComment (Request $request)
+    {
+        $comment = CommentModel::where([['id', $request->input('comment_id')], ['user_id', Auth::id()]])->firstOrFail();
+        
+        $comment->fill($request->all());
+        $comment->save();
+
+        return redirect()->back()->with('alert-success', 'Comment was successfully edited!');
+    }
+
+    public function deleteComment (Request $request)
+    {
+
+    }
 }
