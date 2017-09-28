@@ -1,5 +1,5 @@
 .nav {
-    margin-bottom: 70px;
+    margin-bottom: 35px;
 
     a {
         color: $text-color;
@@ -14,5 +14,16 @@
         font-size: 1.2em;
         padding-top: 35px;
         margin-right: 35px;
+    }
+}
+
+@media only screen and (max-device-width: 480px) {
+	.nav {
+        margin-bottom: 35px;
+
+        .link {
+            font-size: 0.9em;
+            margin-right: 20px;
+        }
     }
 }
