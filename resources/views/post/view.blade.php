@@ -47,10 +47,12 @@
                                     <p id="comment-{{ $comment->id }}">{{ $comment->comment }}</p>
                                 </div>
                                 <div class="media-right">
-                                    <button type="button" class="btn btn-default btn-xs btn-block btn-edit" style="margin-bottom: 5px" data-toggle="modal" data-target="#myModal" data-comment-id="{{ $comment->id }}">
+                                    <button type="button" class="btn-edit btn btn-default btn-xs btn-block" style="margin-bottom: 5px" data-toggle="modal" data-target="#myModal" data-comment-id="{{ $comment->id }}">
                                         Edit
                                     </button>
-                                    <button type="button" class="btn-delete btn btn-danger btn-xs btn-block">Delete</button>
+                                    <button type="button" class="btn-delete btn btn-danger btn-xs btn-block" data-toggle="modal" data-target="#DeleteModal" data-comment-id="{{ $comment->id }}">
+                                        Delete
+                                    </button>
                                 </div>
                             </div>
                         @endforeach
@@ -85,6 +87,31 @@
                 </div>
             </div>
         </div>
+
+        <div id="DeleteModal" class="modal fade" role="dialog">
+            <div class="modal-dialog">
+
+                <div class="modal-content">
+
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal">&times;</button>
+                        <h4 class="modal-title">Are you sure you want to delete this comment?</h4>
+                    </div>
+
+                    {{ Form::open(['route' => 'comment.delete', 'method' => 'DELETE']) }}
+
+                    {{ Form::hidden('comment_id', null, ['id' => 'input-delete-comment-id']) }}
+
+                    <div class="modal-footer">
+                        {{ Form::submit('Yes', ['class' => 'btn btn-danger']) }}
+
+                        <button type="button" class="btn btn-default" data-dismiss="modal">No</button>
+                    </div>
+
+                    {{ Form::close() }}
+                </div>
+            </div>
+        </div>
     </div>
 </div>
 @endsection
@@ -96,6 +123,11 @@
             var comment = $("#comment-" + comment_id).html();
             $("#input-edit-comment-content").val(comment);
             $("#input-edit-comment-id").val(comment_id);
+        })
+
+        $(".btn-delete").click(function () {
+            var comment_id = $(this).data('comment-id');
+            $("#input-delete-comment-id").val(comment_id);
         })
     </script>
 @endsection

@@ -30,7 +30,7 @@ class CommentController extends Controller
     public function editComment (Request $request)
     {
         $comment = CommentModel::where([['id', $request->input('comment_id')], ['user_id', Auth::id()]])->firstOrFail();
-        
+
         $comment->fill($request->all());
         $comment->save();
 
@@ -39,6 +39,10 @@ class CommentController extends Controller
 
     public function deleteComment (Request $request)
     {
+        $comment = CommentModel::where([['id', $request->input('comment_id')], ['user_id', Auth::id()]])->firstOrFail();
 
+        $comment->delete();
+
+        return redirect()->back()->with('alert-success', 'Comment was successfully deleted!');
     }
 }
