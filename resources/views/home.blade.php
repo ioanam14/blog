@@ -15,9 +15,23 @@
                     @endif
 
                     You are logged in!
+                    <img src="" id="random-img" class="m-t-5">
                 </div>
             </div>
         </div>
     </div>
 </div>
+@endsection
+
+@section('after-scripts')
+    <script>
+        $.ajax({
+            url: 'https://dog.ceo/api/breeds/image/random',
+            method: 'GET',
+            success: function (data) {
+                var link = data.message;
+                $('#random-img').attr('src', link);
+            }
+        })
+    </script>
 @endsection
